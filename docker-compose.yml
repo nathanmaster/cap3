@@ -1,16 +1,18 @@
-
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
     container_name: elasticsearch
+    hostname: instance
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
     volumes:
       - es_data:/usr/share/elasticsearch/data
       - cowrie_logs:/cowrie/logs
       - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./certs/ca/ca.crt:/usr/share/elasticsearch/config/certs/ca.crt
+      - ./certs/instance/instance.crt:/usr/share/elasticsearch/config/certs/instance.crt
+      - ./certs/instance/instance.key:/usr/share/elasticsearch/config/certs/instance.key
     ports:
       - "9200:9200"
     networks:
@@ -20,9 +22,19 @@ services:
     image: docker.elastic.co/kibana/kibana:8.17.0
     container_name: kibana
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=https://instance:9200
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbi0xOmNQdVpNYzMxU0ZTaXd2MnVMLXZ2dWc
+      - xpack.fleet.enabled=true
+      - xpack.encryptedSavedObjects.encryptionKey=31885e0c0a3b3c20fd78ce21a4bb256d
+      - xpack.security.encryptionKey=87f82e8f1dbad910cce3893067ae31b1
+      - xpack.reporting.encryptionKey=19b41419a81e2d24a26ffef796a10534
+      - xpack.security.enabled=true
     volumes:
       - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./certs/ca/ca.crt:/usr/share/kibana/config/certs/ca.crt
+      - ./certs/instance/instance.crt:/usr/share/kibana/config/certs/instance.crt
+      - ./certs/instance/instance.key:/usr/share/kibana/config/certs/instance.key
+      - ./service_tokens/kibana-token.txt:/usr/share/kibana/config/kibana-token.txt
     ports:
       - "5601:5601"
     networks:
@@ -32,10 +44,11 @@ services:
     image: cowrie/cowrie:latest
     container_name: cowrie
     environment:
-      - COWRIE_ELASTICSEARCH_HOST=http://elasticsearch:9200
+      - COWRIE_ELASTICSEARCH_HOST=https://elasticsearch:9200
     volumes:
       - cowrie_logs:/cowrie/logs
       - ./cowrie.cfg:/cowrie/cowrie.cfg
+      - ./cowrie_logs:/cowrie/logs
     ports:
       - "22:22"
       - "23:23"

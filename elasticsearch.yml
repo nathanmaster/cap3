@@ -1,7 +1,17 @@
 network.host: 0.0.0.0
 http.port: 9200
 discovery.type: single-node
-xpack.security.enabled: false
-xpack.security.transport.ssl.enabled: false
-
+xpack.security.enabled: true
 indices.query.bool.max_clause_count: 1024
+
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.certificate: /usr/share/elasticsearch/config/certs/instance.crt
+xpack.security.http.ssl.key: /usr/share/elasticsearch/config/certs/instance.key
+xpack.security.http.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.certificate: /usr/share/elasticsearch/config/certs/instance.crt
+xpack.security.transport.ssl.key: /usr/share/elasticsearch/config/certs/instance.key
+xpack.security.transport.ssl.certificate_authorities: [ "/usr/share/elasticsearch/config/certs/ca.crt" ]
+

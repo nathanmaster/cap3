@@ -1,0 +1,30 @@
+Changed password for user apm_system
+PASSWORD apm_system = mfnXOvEYxUcsNoP6gF4q
+
+Changed password for user kibana_system
+PASSWORD kibana_system = pT64ZgntISB3y9W0R0Ak
+
+Changed password for user kibana
+PASSWORD kibana = pT64ZgntISB3y9W0R0Ak
+
+Changed password for user logstash_system
+PASSWORD logstash_system = PKkHzrJ51iGEhDtkG5sy
+
+Changed password for user beats_system
+PASSWORD beats_system = U8eHnrNOsUfpNfbDgvVc
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = 893xCjxp0pNoU5UI5xEd
+
+Changed password for user elastic
+PASSWORD elastic = 7GjiYBqxs170jbAG7seg
+
+
+Service account token:
+elastic/kibana/kibana-token = AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjpSOF9BUklMN1R5Vy1qN2NES1lld3dB
+
+Kibana Keys:
+xpack.encryptedSavedObjects.encryptionKey: 31885e0c0a3b3c20fd78ce21a4bb256d
+xpack.reporting.encryptionKey: 87f82e8f1dbad910cce3893067ae31b1
+xpack.security.encryptionKey: 19b41419a81e2d24a26ffef796a10534
+
